@@ -1,5 +1,6 @@
 ﻿import express from 'express'
 import cors from 'cors'
+import { env } from './config/env.js'
 import { authRoutes } from './modules/auth/auth.routes.js'
 import { clientsRoutes } from './modules/clients/clients.routes.js'
 import { measurementsRoutes } from './modules/measurements/measurements.routes.js'
@@ -10,7 +11,11 @@ import { notificationsRoutes } from './modules/notifications/notifications.route
 
 export const app = express()
 
-app.use(cors())
+app.use(
+  cors({
+    origin: env.frontendUrl,
+  }),
+)
 app.use(express.json())
 
 app.get('/', (req, res) => {
