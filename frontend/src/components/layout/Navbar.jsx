@@ -1,4 +1,5 @@
-﻿import logo from '../../assets/logo.jpg'
+﻿import { Link } from 'react-router-dom'
+import logo from '../../assets/logo.jpg'
 
 function Navbar() {
   return (
@@ -52,9 +53,21 @@ function Navbar() {
             </li>
 
             <li className="nav-item ms-lg-3">
-              <a className="btn btn-primary btn-sm px-3" href="#contacto">
+              <Link
+                className="btn btn-outline-light btn-sm px-3"
+                to="/login"
+              >
+                Ingresar
+              </Link>
+            </li>
+
+            <li className="nav-item ms-lg-2">
+              <Link
+                className="btn btn-primary btn-sm px-3"
+                to="/contacto"
+              >
                 Consultar
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
