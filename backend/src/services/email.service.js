@@ -1,4 +1,4 @@
-﻿import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer'
 import { env } from '../config/env.js'
 
 function emailIsConfigured() {
@@ -15,6 +15,7 @@ function createTransporter() {
     host: env.emailHost,
     port: env.emailPort,
     secure: env.emailSecure,
+    family: 4,
     auth: {
       user: env.emailUser,
       pass: env.emailPassword,
