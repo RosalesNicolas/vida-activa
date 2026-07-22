@@ -10,6 +10,7 @@ import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js'
 import { notificationsRoutes } from './modules/notifications/notifications.routes.js'
 
 export const app = express()
+app.set('trust proxy', 1)
 
 app.use(
   cors({
