@@ -8,6 +8,7 @@ import { routinesRoutes } from './modules/routines/routines.routes.js'
 import { progressRoutes } from './modules/progress/progress.routes.js'
 import { dashboardRoutes } from './modules/dashboard/dashboard.routes.js'
 import { notificationsRoutes } from './modules/notifications/notifications.routes.js'
+import { backupsRoutes } from './modules/backups/backups.routes.js'
 
 export const app = express()
 app.set('trust proxy', 1)
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
       '/api/progress',
       '/api/dashboard',
       '/api/notifications',
+      '/api/backups/database',
     ],
   })
 })
@@ -61,3 +63,5 @@ app.use(
   '/api/notifications',
   notificationsRoutes,
 )
+
+app.use('/api/backups', backupsRoutes)

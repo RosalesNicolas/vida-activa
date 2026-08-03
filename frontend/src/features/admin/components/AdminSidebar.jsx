@@ -8,6 +8,7 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { getNotificationSummary } from '../../../services/notificationService'
+import { downloadDatabaseBackup } from '../../../services/backupService'
 
 function AdminSidebar() {
   const location = useLocation()
@@ -33,11 +34,26 @@ function AdminSidebar() {
     }, [])
 
   useEffect(() => {
-    loadUnreadCount()
-  }, [
-    location.pathname,
-    loadUnreadCount,
-  ])
+  let isCancelled = false
+
+  getNotificationSummary()
+    .then((data) => {
+      if (!isCancelled) {
+        setUnreadCount(
+          data.summary?.unread || 0,
+        )
+      }
+    })
+    .catch(() => {
+      if (!isCancelled) {
+        setUnreadCount(0)
+      }
+    })
+
+  return () => {
+    isCancelled = true
+  }
+}, [location.pathname])
 
   useEffect(() => {
     const intervalId = window.setInterval(
@@ -60,6 +76,22 @@ function AdminSidebar() {
     }
   }, [loadUnreadCount])
 
+  const handleDownloadBackup = async () => {
+    const confirmed = window.confirm(
+      '¿Querés descargar una copia de seguridad de la base de datos?',
+    )
+
+    if (!confirmed) return
+
+    try {
+      await downloadDatabaseBackup()
+    } catch (error) {
+      window.alert(
+        error.response?.data?.message ??
+          'No se pudo descargar la copia de seguridad.',
+      )
+    }
+  }
   return (
     <aside className="admin-sidebar">
       <div className="admin-sidebar-brand">
@@ -107,6 +139,13 @@ function AdminSidebar() {
         >
           Cambiar contraseña
         </NavLink>
+        <button
+          type="button"
+          className="admin-sidebar-link"
+          onClick={handleDownloadBackup}
+        >
+          Descargar respaldo
+        </button>
       </nav>
     </aside>
   )

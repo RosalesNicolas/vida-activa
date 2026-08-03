@@ -20,3 +20,8 @@ frontend/backups/
 frontend/src/assets/Instagram_files/
 
 backend/src/database/tokens
+
+!backend/src/modules/backups/
+!backend/src/modules/backups/backups.controller.js
+!backend/src/modules/backups/backups.routes.js
+!frontend/src/services/backupService.js
