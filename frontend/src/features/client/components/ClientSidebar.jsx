@@ -1,20 +1,26 @@
-﻿import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom"
 
-function ClientSidebar() {
+function ClientSidebar({
+  onNavigate = () => {},
+}) {
+
   const getLinkClass = ({ isActive }) =>
-    `client-sidebar-link ${isActive ? 'active' : ''}`
+    `client-sidebar-link ${isActive ? "active" : ""}`
 
   return (
     <aside className="client-sidebar">
+
       <div className="client-sidebar-brand">
         <span>Vida Activa</span>
         <small>Mi espacio</small>
       </div>
 
       <nav className="client-sidebar-nav">
+
         <NavLink
           to="/client/dashboard"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Inicio
         </NavLink>
@@ -22,6 +28,7 @@ function ClientSidebar() {
         <NavLink
           to="/client/routine"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Mi rutina
         </NavLink>
@@ -29,6 +36,7 @@ function ClientSidebar() {
         <NavLink
           to="/client/measurements"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Mediciones
         </NavLink>
@@ -36,6 +44,7 @@ function ClientSidebar() {
         <NavLink
           to="/client/progress"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Seguimiento
         </NavLink>
@@ -43,6 +52,7 @@ function ClientSidebar() {
         <NavLink
           to="/client/profile"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Mi perfil
         </NavLink>
@@ -50,10 +60,13 @@ function ClientSidebar() {
         <NavLink
           to="/client/change-password"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Cambiar contraseña
         </NavLink>
+
       </nav>
+
     </aside>
   )
 }

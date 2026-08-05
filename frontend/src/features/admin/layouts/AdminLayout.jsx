@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useResponsiveSidebar } from '../../shared/hooks/useResponsiveSidebar'
 import {
   Outlet,
   useNavigate,
@@ -10,19 +10,17 @@ function AdminLayout() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
-  const [menuOpen, setMenuOpen] =
-    useState(false)
+  const {
+    menuOpen,
+    closeMenu,
+    toggleMenu,
+} = useResponsiveSidebar()
 
   const handleLogout = () => {
     logout()
     navigate('/login', { replace: true })
   }
-
-  const handleCloseMenu = () => {
-    setMenuOpen(false)
-  }
-
-  return (
+return (
     <div className="admin-layout">
       <div
         className={`admin-sidebar-wrapper ${
@@ -30,7 +28,7 @@ function AdminLayout() {
         }`}
       >
         <AdminSidebar
-          onNavigate={handleCloseMenu}
+          onNavigate={closeMenu}
         />
       </div>
 
@@ -39,7 +37,7 @@ function AdminLayout() {
           type="button"
           className="admin-sidebar-backdrop"
           aria-label="Cerrar menú"
-          onClick={handleCloseMenu}
+          onClick={closeMenu}
         />
       )}
 
@@ -49,9 +47,7 @@ function AdminLayout() {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm admin-menu-button"
-              onClick={() =>
-                setMenuOpen((current) => !current)
-              }
+              onClick={toggleMenu}
               aria-expanded={menuOpen}
               aria-label="Abrir menú de administración"
             >
