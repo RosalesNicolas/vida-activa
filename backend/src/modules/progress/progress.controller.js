@@ -1,4 +1,5 @@
-﻿import { Client } from '../clients/client.model.js'
+import { sequelize } from '../../database/connection.js'
+import { Client } from '../clients/client.model.js'
 import { User } from '../users/user.model.js'
 import { Progress } from './progress.model.js'
 import { createEventNotificationForAdmins } from '../notifications/notification.service.js'
@@ -91,6 +92,131 @@ function buildPagination({
   }
 }
 
+export async function createBulkProgressNotes(req, res) {
+  try {
+    const clientIds = Array.isArray(req.body.clientIds)
+      ? [
+          ...new Set(
+            req.body.clientIds
+              .map(Number)
+              .filter(
+                (clientId) =>
+                  Number.isInteger(clientId) &&
+                  clientId > 0,
+              ),
+          ),
+        ]
+      : []
+
+    const date = normalizeRequiredText(
+      req.body.date,
+    )
+
+    const title = normalizeRequiredText(
+      req.body.title,
+    )
+
+    const comment = normalizeRequiredText(
+      req.body.comment,
+    )
+
+    const status =
+      normalizeStatus(req.body.status) ||
+      'en_proceso'
+
+    if (clientIds.length === 0) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          'Debés seleccionar al menos un cliente',
+      })
+    }
+
+    if (!date || !title || !comment) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          'Fecha, título y comentario son obligatorios',
+      })
+    }
+
+    if (!isValidDate(date)) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          'La fecha no tiene un formato válido',
+      })
+    }
+
+    if (!ALLOWED_STATUSES.has(status)) {
+      return res.status(400).json({
+        ok: false,
+        message:
+          'El estado del seguimiento no es válido',
+      })
+    }
+
+    const clients = await Client.findAll({
+      where: {
+        id: clientIds,
+      },
+      attributes: ['id'],
+    })
+
+    if (clients.length !== clientIds.length) {
+      return res.status(404).json({
+        ok: false,
+        message:
+          'Uno o más clientes seleccionados no existen',
+      })
+    }
+
+    const nextAction = normalizeOptionalText(
+      req.body.nextAction,
+    )
+
+    const visibleToClient =
+      typeof req.body.visibleToClient ===
+      'boolean'
+        ? req.body.visibleToClient
+        : true
+
+    const progressNotes =
+      await sequelize.transaction(
+        async (transaction) =>
+          Progress.bulkCreate(
+            clientIds.map((clientId) => ({
+              clientId,
+              date,
+              title,
+              comment,
+              status,
+              nextAction,
+              visibleToClient,
+            })),
+            {
+              transaction,
+              returning: true,
+            },
+          ),
+      )
+
+    return res.status(201).json({
+      ok: true,
+      message:
+        `Se crearon ${progressNotes.length} notas de seguimiento`,
+      progressNotes,
+    })
+  } catch (error) {
+    console.error(error)
+
+    return res.status(500).json({
+      ok: false,
+      message:
+        'Error al crear las notas de seguimiento',
+    })
+  }
+}
 export async function createProgressNote(req, res) {
   try {
     const clientId = Number(req.body.clientId)

@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getMyRoutines } from '../../../services/routineService'
 
 const PAGE_SIZE = 5
@@ -158,13 +158,18 @@ function ClientRoutinePage() {
             </p>
 
             {currentRoutine.description && (
-              <p>{currentRoutine.description}</p>
+              <p style={{ whiteSpace: 'pre-wrap' }}>
+                {currentRoutine.description}
+              </p>
             )}
 
             {currentRoutine.notes && (
               <div className="alert alert-light border">
-                <strong>Indicaciones generales:</strong>{' '}
-                {currentRoutine.notes}
+                <strong>Indicaciones generales:</strong>
+
+                <div style={{ whiteSpace: 'pre-wrap' }}>
+                  {currentRoutine.notes}
+                </div>
               </div>
             )}
 
@@ -292,4 +297,3 @@ function ClientRoutinePage() {
 }
 
 export default ClientRoutinePage
-

@@ -1,4 +1,4 @@
-﻿import { api } from './api'
+import { api } from './api'
 
 export async function getProgressByClient(
   clientId,
@@ -14,6 +14,15 @@ export async function getProgressByClient(
   return response.data
 }
 
+
+export async function createBulkProgress(progressData) {
+  const response = await api.post(
+    '/progress/bulk',
+    progressData,
+  )
+
+  return response.data
+}
 export async function createProgress(
   progressData,
 ) {

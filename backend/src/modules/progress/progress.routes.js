@@ -1,5 +1,6 @@
-﻿import { Router } from 'express'
+import { Router } from 'express'
 import {
+  createBulkProgressNotes,
   createProgressNote,
   listMyProgress,
   listProgressByClient,
@@ -30,6 +31,12 @@ progressRoutes.patch(
   '/:id/client-comment-editing',
   authorizeRoles('admin'),
   setClientCommentEditing,
+)
+
+progressRoutes.post(
+  '/bulk',
+  authorizeRoles('admin'),
+  createBulkProgressNotes,
 )
 
 progressRoutes.post(

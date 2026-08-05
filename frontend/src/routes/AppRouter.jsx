@@ -21,6 +21,7 @@ import AdminEditMeasurementPage from '../features/admin/pages/AdminEditMeasureme
 import AdminNewRoutinePage from '../features/admin/pages/AdminNewRoutinePage'
 import AdminEditRoutinePage from '../features/admin/pages/AdminEditRoutinePage'
 import AdminNewProgressPage from '../features/admin/pages/AdminNewProgressPage'
+import AdminBulkProgressPage from '../features/admin/pages/AdminBulkProgressPage'
 import AdminEditProgressPage from '../features/admin/pages/AdminEditProgressPage'
 import ClientLayout from '../features/client/layouts/ClientLayout'
 import ClientDashboardPage from '../features/client/pages/ClientDashboardPage'
@@ -113,6 +114,10 @@ function AppRouter() {
             <Route
               path="clients/:id/progress/new"
               element={<AdminNewProgressPage />}
+            />
+            <Route
+              path="progress/bulk"
+              element={<AdminBulkProgressPage />}
             />
 
             <Route

@@ -362,15 +362,16 @@ export async function updateClient(req, res) {
 
     const name = normalizeRequiredText(req.body.name)
     const email = normalizeEmail(req.body.email)
+    const injuries = normalizeRequiredText(req.body.injuries)
     const diseases = normalizeRequiredText(req.body.diseases)
 
-    if (!name || !email || !diseases) {
+    if (!name || !email || !injuries || !diseases) {
       await transaction.rollback()
 
       return res.status(400).json({
         ok: false,
         message:
-          'Nombre, email y enfermedades son obligatorios. Si no posee enfermedades, indicá "Ninguna".',
+          'Nombre, email, lesiones y enfermedades son obligatorios. Si no posee lesiones o enfermedades, indicá "Ninguna".',
       })
     }
 
@@ -453,7 +454,7 @@ export async function updateClient(req, res) {
     client.address = normalizeOptionalText(req.body.address)
     client.occupation = normalizeOptionalText(req.body.occupation)
     client.objective = normalizeOptionalText(req.body.objective)
-    client.injuries = normalizeOptionalText(req.body.injuries)
+    client.injuries = injuries
     client.diseases = diseases
     client.medications = normalizeOptionalText(req.body.medications)
     client.emergencyContactName = normalizeOptionalText(
@@ -591,15 +592,16 @@ export async function updateMyClientProfile(req, res) {
 
     const name = normalizeRequiredText(req.body.name)
     const email = normalizeEmail(req.body.email)
+    const injuries = normalizeRequiredText(req.body.injuries)
     const diseases = normalizeRequiredText(req.body.diseases)
 
-    if (!name || !email || !diseases) {
+    if (!name || !email || !injuries || !diseases) {
       await transaction.rollback()
 
       return res.status(400).json({
         ok: false,
         message:
-          'Nombre, email y enfermedades son obligatorios. Si no tenés enfermedades, escribí "Ninguna".',
+          'Nombre, email, lesiones y enfermedades son obligatorios. Si no tenés lesiones o enfermedades, escribí "Ninguna".',
       })
     }
 
@@ -681,7 +683,7 @@ export async function updateMyClientProfile(req, res) {
     client.occupation = normalizeOptionalText(req.body.occupation)
     client.height = height
     client.objective = normalizeOptionalText(req.body.objective)
-    client.injuries = normalizeOptionalText(req.body.injuries)
+    client.injuries = injuries
     client.diseases = diseases
     client.medications = normalizeOptionalText(req.body.medications)
     client.emergencyContactName = normalizeOptionalText(

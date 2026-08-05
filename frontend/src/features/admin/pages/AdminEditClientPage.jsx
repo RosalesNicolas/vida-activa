@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Link,
   useNavigate,
@@ -419,7 +419,12 @@ function AdminEditClientPage() {
               className="form-control"
               value={formData.injuries}
               onChange={handleChange}
+              required
             />
+            <div className="form-text">
+              Si no posee lesiones o limitaciones,
+              indicá "Ninguna".
+            </div>
           </div>
 
           <div className="col-md-6">
@@ -462,6 +467,10 @@ function AdminEditClientPage() {
               value={formData.medications}
               onChange={handleChange}
             />
+            <div className="form-text">
+              Si no toma medicación,
+              indicá "Ninguna".
+            </div>
           </div>
 
           <div className="col-md-6">

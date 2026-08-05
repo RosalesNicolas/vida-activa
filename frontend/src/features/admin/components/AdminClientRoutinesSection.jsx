@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   activateRoutine,
@@ -40,7 +40,11 @@ function CurrentRoutineCard({ routine, clientId, onDeactivate, actionLoading }) 
           {routine.endDate || 'Sin fecha'}
         </p>
 
-        {routine.description && <p>{routine.description}</p>}
+        {routine.description && (
+          <p style={{ whiteSpace: 'pre-wrap' }}>
+            {routine.description}
+          </p>
+        )}
 
         <h4 className="h6 mt-4">Ejercicios</h4>
 

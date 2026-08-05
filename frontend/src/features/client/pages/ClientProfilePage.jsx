@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   getMyClientProfile,
   updateMyClientProfile,
@@ -478,7 +478,12 @@ function ClientProfilePage() {
                 className="form-control"
                 value={formData.injuries}
                 onChange={handleChange}
+                required
               />
+              <div className="form-text">
+                Si no tenés lesiones o limitaciones,
+                escribí "Ninguna".
+              </div>
             </div>
 
             <div className="col-md-6">
@@ -521,6 +526,10 @@ function ClientProfilePage() {
                 value={formData.medications}
                 onChange={handleChange}
               />
+              <div className="form-text">
+                Si no tomás medicación,
+                escribí "Ninguna".
+              </div>
             </div>
 
             <div className="col-md-6">

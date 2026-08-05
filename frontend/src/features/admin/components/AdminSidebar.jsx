@@ -10,7 +10,9 @@ import {
 import { getNotificationSummary } from '../../../services/notificationService'
 import { downloadDatabaseBackup } from '../../../services/backupService'
 
-function AdminSidebar() {
+function AdminSidebar({
+  onNavigate = () => {},
+}) {
   const location = useLocation()
 
   const [unreadCount, setUnreadCount] =
@@ -103,6 +105,7 @@ function AdminSidebar() {
         <NavLink
           to="/admin/dashboard"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Dashboard
         </NavLink>
@@ -110,10 +113,18 @@ function AdminSidebar() {
         <NavLink
           to="/admin/clients"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Clientes
         </NavLink>
 
+        <NavLink
+          to="/admin/progress/bulk"
+          className={getLinkClass}
+          onClick={onNavigate}
+        >
+          Seguimiento múltiple
+        </NavLink>
         <NavLink
           to="/admin/notifications"
           className={({ isActive }) =>
@@ -121,6 +132,7 @@ function AdminSidebar() {
               isActive,
             })} d-flex align-items-center justify-content-between gap-2`
           }
+          onClick={onNavigate}
         >
           <span>Notificaciones</span>
 
@@ -136,13 +148,17 @@ function AdminSidebar() {
         <NavLink
           to="/admin/change-password"
           className={getLinkClass}
+          onClick={onNavigate}
         >
           Cambiar contraseña
         </NavLink>
         <button
           type="button"
           className="admin-sidebar-link"
-          onClick={handleDownloadBackup}
+          onClick={async () => {
+            onNavigate()
+            await handleDownloadBackup()
+          }}
         >
           Descargar respaldo
         </button>
