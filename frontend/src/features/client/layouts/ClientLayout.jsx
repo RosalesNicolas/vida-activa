@@ -1,4 +1,4 @@
-﻿import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../context/useAuth'
 import ClientSidebar from '../components/ClientSidebar'
 
@@ -19,7 +19,6 @@ function ClientLayout() {
         <header className="client-header">
           <div>
             <strong>{user?.name || 'Cliente'}</strong>
-            <span>Cliente</span>
           </div>
 
           <button

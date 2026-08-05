@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getClientDashboard } from '../../../services/dashboardService'
 
@@ -435,37 +435,6 @@ function ClientDashboardPage() {
                 mediciones.
               </p>
             )}
-          </div>
-        </div>
-
-        <div className="col-lg-5">
-          <div className="card border-0 shadow-sm p-4 h-100">
-            <h2 className="h5 mb-3">
-              Accesos rápidos
-            </h2>
-
-            <div className="d-grid gap-2">
-              <Link
-                to="/client/measurements/new"
-                className="btn btn-dark"
-              >
-                Registrar medición
-              </Link>
-
-              <Link
-                to="/client/profile"
-                className="btn btn-outline-dark"
-              >
-                Actualizar perfil
-              </Link>
-
-              <Link
-                to="/client/routine"
-                className="btn btn-outline-dark"
-              >
-                Consultar rutina
-              </Link>
-            </div>
           </div>
         </div>
       </div>

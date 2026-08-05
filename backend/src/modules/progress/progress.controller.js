@@ -621,7 +621,7 @@ export async function updateClientComment(
       return res.status(409).json({
         ok: false,
         message:
-          'La respuesta ya fue enviada. Felipe debe habilitar la edición para modificarla.',
+          'Respuesta enviada.',
       })
     }
 
